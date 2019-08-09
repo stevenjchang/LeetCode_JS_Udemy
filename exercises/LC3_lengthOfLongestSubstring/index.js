@@ -6,23 +6,18 @@
 
 function lengthOfLongestSubstring(s) {
   let hash = {};
-  let subString = "";
-  let longestSubstring = ""
+  let start = 0;
+  let maxLength = 0;
 
   for (let i = 0; i < s.length; i++) {
-    for (let j = 0; j < s.length - i; j++) {
-      let letter = s[i+j]
-      if (!hash[letter]) {
-        hash[letter] = 1;
-        subString += letter;
-      } else {
-        if (subString.length > longestSubstring.length) longestSubstring = subString;
-        hash = {};
-        subString = "";
-      }
+    let char = s[i];
+    if (hash[char] >= start) {
+      start = hash[char] + 1;
     }
+    hash[char] = i;
+    maxLength = Math.max(maxLength, i - start + 1)
   }
-  return longestSubstring.length
+  return maxLength
 }
 
 module.exports = lengthOfLongestSubstring;
